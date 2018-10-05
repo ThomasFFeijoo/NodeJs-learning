@@ -1,16 +1,13 @@
-const startupDebugger = require('debug')('app:startup');
-const dbDebugger = require('debug')('app:db');
+const debug = require('debug')('app:startup');
 const morgan = require('morgan');
 const express = require('express');
 const app = express();
 
 if(app.get('env') === 'development') {
     app.use(morgan('tiny')); // use only in development, it logs requests and their sizes
-    startupDebugger('Morgan Enabled...');
+    debug('Morgan Enabled...'); // console.log
 }
 
-// Db work..
-dbDebugger('connected to the db');
 
 // PORT
 const port = process.env.PORT || 3000;
