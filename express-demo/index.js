@@ -89,7 +89,7 @@ app.delete('/api/courses/:id', (req, res) => {
     courses.splice(index, 1);
 
     res.send(course);
-})
+});
 
 
 function validateCourse(course) {
