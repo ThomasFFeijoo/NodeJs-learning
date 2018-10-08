@@ -7,6 +7,7 @@ const courses= [
     { id: 3, name: 'course3' },
 ];
 
+// when arrive in this file, the base path is /api/courses/
 //get all courses
 router.get('/', (req, res) => {
     res.send(courses);

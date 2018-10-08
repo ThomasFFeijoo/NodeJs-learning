@@ -3,8 +3,9 @@ const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const Joi = require('joi');
-const logger = require('./logger');
-const courses = require('./courses');
+const logger = require('./middleware/logger');
+const courses = require('./routes/courses');
+const home = require('./routes/home')
 
 const express = require('express');
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.urlencoded( { extended: true} )); // add to req.body, parse key=
 app.use(express.static('public')); // load files in public
 app.use(helmet());
 app.use('/api/courses', courses); // declaration to use route
+app.use('/', home);
 
 // Configs
 console.log(`Application name: ${config.get('name')}`);
@@ -30,9 +32,6 @@ if(app.get('env') === 'development') {
 }
 
 app.use(logger);
-
- 
-
 
 // PORT
 const port = process.env.PORT || 3000;
