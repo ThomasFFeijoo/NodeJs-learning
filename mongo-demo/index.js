@@ -42,28 +42,30 @@ async function getCourses() {
 }
 
 async function updateCourse(id) {
-    // approch: query first
-    // find by id
-    // modify properties
-    // save()
-    const course = await Course.findById(id);
-    if(!course) return;
-    course.isPublished = true;
-    course.author = 'Another Author';
-    
-    /* Another way to set
-    course.set({
-        isPublished: true,
-        author: 'Another Author'
-    });
-    */
-
-    const result = await course.save();
-    console.log(result);
-
     // approach: update first
     // update directly
     // optionally: get the updated document
+    // search for mongodb update operators
+    // .update will return if the operation was succesfull
+    /*const result = await Course.update({ _id: id }, {
+        $set: {
+            author: 'Thomas',
+            isPublished: false
+        }
+    });
+
+    console.log(result);
+    */
+   
+    // if you want to return the original object, use: .findByIdAndUpdate
+    // if you want to return the new object, add new param
+   const course = await Course.findByIdAndUpdate( id , {
+        $set: {
+            author: 'Thomassss',
+            isPublished: false
+        }
+    }, {new: true});
+    console.log(course);
 }
 
 //createCourse();
