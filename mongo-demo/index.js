@@ -27,23 +27,14 @@ async function createCourse() {
     console.log(result);
 }
 async function getCourses() {
-    // comparison operators
-    // eq (equal)
-    // ne (not equal)
-    // gt (greater than)
-    // gte (greater than or equal to)
-    // lt (less than)
-    // lte (less than or equal to)
-    // in
-    // nin (not in)
-    
-    //returns everything
-    //const courses = await Course.find();
-    
+    // logical operators
+    // or
+    // and
+
     const courses = await Course
         //.find({ author: 'Thomas', isPublished: true })
-        //.find({ price: { $gt: 10, $lte: 20 } }) // greater than 10 and less than or equal to 20
-        .find({ price: { $in: [10, 15, 20] } }) //price needs to be 10,15 or 20
+        .find()
+        .or([ { author: 'Thomas' }, { isPublished: true }])
         .limit(10)
         .sort({ name: 1 })
         .select({ name: 1, tags: 1 });
