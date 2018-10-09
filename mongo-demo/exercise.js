@@ -16,10 +16,16 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model('Course', courseSchema);
 
 async function getCourses() {
+    /*
     return await Course
         .find({ isPublished: true, tags: 'backend' })
         .sort({ name:1 })
         .select({ name: 1, author: 1 });
+        */
+    return await Course
+        .find({ isPublished: true, tags: { $in: ['frontend', 'backend'] } })
+        .sort({ price: -1 })
+        .select({ name: 1, author: 1 , price: 1});
 }
 
 async function run(){
