@@ -42,23 +42,6 @@ async function getCourses() {
 }
 
 async function updateCourse(id) {
-    // approach: update first
-    // update directly
-    // optionally: get the updated document
-    // search for mongodb update operators
-    // .update will return if the operation was succesfull
-    /*const result = await Course.update({ _id: id }, {
-        $set: {
-            author: 'Thomas',
-            isPublished: false
-        }
-    });
-
-    console.log(result);
-    */
-   
-    // if you want to return the original object, use: .findByIdAndUpdate
-    // if you want to return the new object, add new param
    const course = await Course.findByIdAndUpdate( id , {
         $set: {
             author: 'Thomassss',
@@ -68,6 +51,14 @@ async function updateCourse(id) {
     console.log(course);
 }
 
+async function removeCourse(id) {
+    // deleteMany if want to delete more than 1
+    //const result = await Course.deleteOne({ _id: id });
+    const course = await Course.findByIdAndRemove(id);
+    console.log(course);
+ }
+
 //createCourse();
 //getCourses();
-updateCourse('5bbc9710516adb108fb40475');
+//updateCourse('5bbc9710516adb108fb40475');
+removeCourse('5bbc9710516adb108fb40475');
