@@ -5,11 +5,28 @@ mongoose.connect('mongodb://localhost/playground')
     .catch(err => console.error('could not connect', err));
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    //making the fields required in mongoose
+    name: { 
+        type: String, 
+        required: true, 
+        minlength: 5,
+        maxlength: 255
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['web', 'mobile', 'network']
+    },
     author: String,
     tags: [ String ],
     date: { type: Date, default: Date.now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: {
+        type: Number,
+        required: function() {
+            return this.isPublished; // custom validation
+        }
+    }
 });
 
 const Course = mongoose.model('Course', courseSchema);
@@ -18,15 +35,20 @@ const Course = mongoose.model('Course', courseSchema);
 async function createCourse() {
     const course = new Course({
         name: 'Angular Course',
+        category: '-',
         author: 'Thomas',
         tags: [ 'angular', 'frontend'],
-        isPublished: true
+        isPublished: true,
+        price: 15
     });
 
-    const result = await course.save(); // returns a Promise
-    console.log(result);
+    try{
+        const result = await course.save(); // returns a Promise
+        console.log(result);
+    } catch(e) {
+        console.log(e.message);
+    }
 }
-
 
 async function getCourses() {
     const pageNumber = 2;
@@ -58,7 +80,7 @@ async function removeCourse(id) {
     console.log(course);
  }
 
-//createCourse();
+createCourse();
 //getCourses();
 //updateCourse('5bbc9710516adb108fb40475');
-removeCourse('5bbc9710516adb108fb40475');
+//removeCourse('5bbc9710516adb108fb40475');
