@@ -12,10 +12,18 @@ const courseSchema = new mongoose.Schema({
     isPublished: Boolean
 });
 
+// create the object that will be added to the db, like the model object in zend 3
 const Course = mongoose.model('Course', courseSchema);
-const course = new Course({
-    name: 'Nodejs Course',
-    author: 'Thomas',
-    tags: [ 'node', 'backend'],
-    isPublished: true
-});
+async function createCourse() {
+    const course = new Course({
+        name: 'Angular Course',
+        author: 'Thomas',
+        tags: [ 'angular', 'frontend'],
+        isPublished: true
+    });
+
+    const result = await course.save(); // returns a Promise
+    console.log(result);
+}
+
+createCourse();
