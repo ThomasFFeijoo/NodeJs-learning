@@ -35,14 +35,37 @@ async function getCourses() {
 
     const courses = await Course
         .find({ author: 'Thomas', isPublished: true })
-        //limit and skip are used together to create pagination
-        .skip((pageNumber - 1) * pageSize)
-        .limit(pageSize)
         .sort({ name: 1 })
         .select({ name: 1, tags: 1 });
 
     console.log(courses);
 }
 
+async function updateCourse(id) {
+    // approch: query first
+    // find by id
+    // modify properties
+    // save()
+    const course = await Course.findById(id);
+    if(!course) return;
+    course.isPublished = true;
+    course.author = 'Another Author';
+    
+    /* Another way to set
+    course.set({
+        isPublished: true,
+        author: 'Another Author'
+    });
+    */
+
+    const result = await course.save();
+    console.log(result);
+
+    // approach: update first
+    // update directly
+    // optionally: get the updated document
+}
+
 //createCourse();
-getCourses();
+//getCourses();
+updateCourse('5bbc9710516adb108fb40475');
