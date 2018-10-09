@@ -27,14 +27,16 @@ async function createCourse() {
     console.log(result);
 }
 async function getCourses() {
-    // logical operators
-    // or
-    // and
-
     const courses = await Course
         //.find({ author: 'Thomas', isPublished: true })
-        .find()
-        .or([ { author: 'Thomas' }, { isPublished: true }])
+        // Starts with Thom
+        //.find({ author: /^Thom/ }) // ^ = begins with
+
+        // Ends with mas
+        //.find({ author: /mas$/i }) // $ = ends with, i = case insensitive
+        
+        // Contains homa
+        .find({ author: /.*homa.*/i }) // .* .* = contains
         .limit(10)
         .sort({ name: 1 })
         .select({ name: 1, tags: 1 });
